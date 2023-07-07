@@ -28,7 +28,14 @@ resource "aws_ecs_task_definition" "ecs_api_terraform_task" {
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "ecs"
         }
-      }
+      },
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "hostPort": 3000,
+          "protocol": "tcp"
+        }
+      ]
     }
   ]
   DEFINITION

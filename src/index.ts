@@ -1,5 +1,13 @@
-export function helloWorld() {
-  console.log("Hello World!");
-}
+import express, { Request, Response } from "express";
 
-helloWorld();
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.get("/", (_req: Request, res: Response) => {
+  res.header("Content-Type", "application/json");
+  res.status(200).send({ message: "Hello World!" });
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});

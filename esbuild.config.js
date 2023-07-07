@@ -5,4 +5,5 @@ require("esbuild").build({
   sourcemap: true,
   target: ["es2015"],
   outfile: "./dist/index.js",
+  platform: "node",
 });
