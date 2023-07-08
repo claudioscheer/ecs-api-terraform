@@ -48,8 +48,8 @@ resource "aws_ecs_service" "ecs_api_terraform_service" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets          = [aws_default_subnet.default_subnet_a.id, aws_default_subnet.default_subnet_b.id]
-    security_groups  = [aws_security_group.load_balancer_security_group.id]
+    subnets         = [aws_default_subnet.default_subnet_a.id, aws_default_subnet.default_subnet_b.id]
+    security_groups = [aws_security_group.service_security_group.id]
     assign_public_ip = true
   }
 
