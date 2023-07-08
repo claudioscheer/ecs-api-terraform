@@ -10,7 +10,7 @@ app.get("/_health", (_req: Request, res: Response) => {
 
 app.get("/", (_req: Request, res: Response) => {
   res.header("Content-Type", "application/json");
-  res.status(200).send({ message: "Hello World!!" });
+  res.status(200).send({ message: "Hello World!" });
 });
 
 app.listen(port, "0.0.0.0", () => {

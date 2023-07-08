@@ -21,7 +21,7 @@ resource "aws_ecs_task_definition" "ecs_api_terraform_task" {
   [
     {
       "name": "ecs-api-terraform-task",
-      "image": "${aws_ecr_repository.ecs_api_terraform_repo.repository_url}:latest",
+      "image": "${aws_ecr_repository.ecs_api_terraform_repo.repository_url}:${var.docker_tag}",
       "essential": true,
       "memory": 512,
       "cpu": 256,
