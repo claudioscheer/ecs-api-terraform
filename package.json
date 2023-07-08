@@ -5,7 +5,8 @@
   "scripts": {
     "build": "node esbuild.config.js",
     "build:docker": "docker build -t ecs-api-terraform .",
-    "start:docker": "docker run -p 3000:3000 ecs-api-terraform",
+    "remove:container": "docker stop ecs-api && docker container rm ecs-api",
+    "start:docker": "npm run build:docker && docker run -p 3000:3000 --name ecs-api ecs-api-terraform",
     "start:dev": "tsx watch ./src/index.ts",
     "test": "jest"
   },

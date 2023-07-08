@@ -16,7 +16,7 @@ resource "aws_ecs_task_definition" "ecs_api_terraform_task" {
   container_definitions    = <<DEFINITION
   [
     {
-      "name": "ecs-api-terraform-container",
+      "name": "ecs-api-terraform-task",
       "image": "${aws_ecr_repository.ecs_api_terraform_repo.repository_url}:latest",
       "essential": true,
       "memory": 512,
@@ -32,11 +32,32 @@ resource "aws_ecs_task_definition" "ecs_api_terraform_task" {
       "portMappings": [
         {
           "containerPort": 3000,
-          "hostPort": 3000,
-          "protocol": "tcp"
+          "hostPort": 3000
         }
       ]
     }
   ]
   DEFINITION
+}
+
+resource "aws_ecs_service" "ecs_api_terraform_service" {
+  name            = "ecs-api-terraform-service"
+  cluster         = aws_ecs_cluster.ecs_api_terraform_cluster.id
+  task_definition = aws_ecs_task_definition.ecs_api_terraform_task.arn
+  desired_count   = 1
+  launch_type     = "FARGATE"
+
+  network_configuration {
+    subnets          = [aws_default_subnet.default_subnet_a.id, aws_default_subnet.default_subnet_b.id]
+    security_groups  = [aws_security_group.load_balancer_security_group.id]
+    assign_public_ip = true
+  }
+
+  load_balancer {
+    target_group_arn = aws_lb_target_group.ecs_api_lb_target_group.arn
+    container_name   = aws_ecs_task_definition.ecs_api_terraform_task.family
+    container_port   = 3000
+  }
+
+  depends_on = [aws_lb_listener.ecs_api_lb_listener]
 }

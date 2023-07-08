@@ -7,7 +7,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "terraform-state-ecs-api-terraform-dev"
+    bucket         = "terraform-state-ecs-api-terraform"
     key            = "terraform.tfstate"
     region         = "us-east-1"
     dynamodb_table = "terraform-state-ecs-api-terraform-dev"
@@ -16,4 +16,8 @@ terraform {
 
 provider "aws" {
   region = "us-east-1"
+}
+
+output "ecs_api_lb_dns_name" {
+  value = aws_lb.ecs_api_lb.dns_name
 }
