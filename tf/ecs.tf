@@ -6,6 +6,10 @@ resource "aws_ecs_cluster" "ecs_api_terraform_cluster" {
   name = "ecs-api-terraform-cluster"
 }
 
+resource "aws_cloudwatch_log_group" "ecs_api_terraform_task_log_group" {
+  name = "/ecs/service/ecs-api-terraform-task"
+}
+
 resource "aws_ecs_task_definition" "ecs_api_terraform_task" {
   family                   = "ecs-api-terraform-task"
   requires_compatibilities = ["FARGATE"]
@@ -48,8 +52,8 @@ resource "aws_ecs_service" "ecs_api_terraform_service" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets         = [aws_default_subnet.default_subnet_a.id, aws_default_subnet.default_subnet_b.id]
-    security_groups = [aws_security_group.service_security_group.id]
+    subnets          = [aws_default_subnet.default_subnet_a.id, aws_default_subnet.default_subnet_b.id]
+    security_groups  = [aws_security_group.service_security_group.id]
     assign_public_ip = true
   }
 
