@@ -13,6 +13,8 @@ app.get("/", (_req: Request, res: Response) => {
   res.status(200).send({ message: "Hello World!" });
 });
 
-app.listen(port, "0.0.0.0", () => {
+const server = app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+export default server;

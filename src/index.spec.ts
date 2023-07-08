@@ -1,11 +1,24 @@
-import { helloWorld } from "./index";
+import request from "supertest";
+import server from "./index";
 
-describe("helloWorld", () => {
-  it("should say hello world", () => {
-    const spy = jest.spyOn(console, "log");
+afterAll(() => {
+  server.close();
+});
 
-    helloWorld();
+describe("index.ts", () => {
+  describe("GET /_health", () => {
+    it("should return status 200", async () => {
+      const res = await request(server).get("/_health");
+      expect(res.status).toEqual(200);
+      expect(res.body).toEqual({ status: "healthy" });
+    });
+  });
 
-    expect(spy).toHaveBeenCalledWith("Hello World!");
+  describe("GET /", () => {
+    it("should return status 200", async () => {
+      const res = await request(server).get("/");
+      expect(res.status).toEqual(200);
+      expect(res.body).toEqual({ message: "Hello World!" });
+    });
   });
 });

@@ -2,5 +2,10 @@
   "preset": "ts-jest",
   "bail": 1,
   "verbose": true,
-  "clearMocks": true
+  "clearMocks": true,
+  "collectCoverage": true,
+  "coverageDirectory": "coverage",
+  "coveragePathIgnorePatterns": ["/node_modules/"],
+  "coverageReporters": ["text"],
+  "moduleFileExtensions": ["ts", "tsx", "js", "jsx"]
 }
