@@ -60,7 +60,7 @@ resource "aws_lb_target_group" "ecs_api_lb_target_group" {
   health_check {
     enabled             = true
     interval            = 5
-    path                = "/"
+    path                = "/_health"
     port                = "traffic-port"
     protocol            = "HTTP"
     timeout             = 2
